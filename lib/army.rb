@@ -9,14 +9,5 @@ require_relative 'king'
 
 # module for creating sets of colored pieces
 module Army
-  def self.create(color)
-    army = []
-    8.times { army << Pawn.new(color) }
-    2.times { army << Rook.new(color) }
-    2.times { army << Knight.new(color) }
-    2.times { army << Bishop.new(color) }
-    army << Queen.new(color)
-    army << King.new(color)
-    army
-  end
+  PIECE_ORDER = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook].freeze
 end
