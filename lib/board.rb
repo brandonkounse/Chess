@@ -6,11 +6,46 @@ require_relative 'army'
 class Board
   include Army
 
-  attr_reader :squares, :white_pieces, :black_pieces
+  attr_reader :squares
 
   def initialize
     @squares = Array.new(8) { Array.new(8) { nil } }
-    @white_pieces = Army.create(:white)
-    @black_pieces = Army.create(:black)
+    setup_pieces(:white, Army::PIECE_ORDER)
+    setup_pieces(:black, Army::PIECE_ORDER)
+  end
+
+  def display; end
+
+  private
+
+  def setup_pieces(color, pieces)
+    setup_major_pieces(color, pieces)
+    setup_pawns(color)
+  end
+
+  def setup_major_pieces(color, pieces)
+    top_row = 0
+    bottom_row = 7
+
+    if color == :black
+      squares[top_row].map!.each_with_index do |_square, index|
+        pieces[index].new(color)
+      end
+    else
+      squares[bottom_row].map!.each_with_index do |_squre, index|
+        pieces[index].new(color)
+      end
+    end
+  end
+
+  def setup_pawns(color)
+    black_pawn_row = 1
+    white_pawn_row = 6
+
+    if color == :black
+      squares[black_pawn_row].map! { Army::PAWN.new(color) }
+    else
+      squares[white_pawn_row].map! { Army::PAWN.new(color) }
+    end
   end
 end
