@@ -2,7 +2,7 @@
 
 # Pawn piece for chess board
 class Pawn
-  attr_reader :color, :has_moved, :movement
+  attr_reader :color, :model, :has_moved, :movement
 
   def initialize(color = nil)
     @color = color
@@ -15,6 +15,7 @@ class Pawn
       en_passant_left: [2, -1],
       en_passant_right: [2, 1]
     }
+    set_model
   end
 
   def move(coords)
@@ -22,5 +23,15 @@ class Pawn
 
     @has_moved = true
     coords
+  end
+
+  private
+
+  def set_model
+    @model = if color == :black
+               '♟' # U+265F
+             else
+               '♙' # U+2659
+             end
   end
 end
