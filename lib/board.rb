@@ -14,7 +14,12 @@ class Board
     setup_pieces(:black, Army::PIECE_ORDER)
   end
 
-  def display; end
+  def display
+    squares.each do |row|
+      print row.map { |square| square&.model || ' ' }.join(' | ')
+      puts
+    end
+  end
 
   private
 
