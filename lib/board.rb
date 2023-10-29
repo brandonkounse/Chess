@@ -18,11 +18,11 @@ class Board
     squares.each_with_index do |row, i|
       row.each_with_index do |square, j|
         if (i + j).even?
-          # White background, black foreground
-          print "\e[38;5;0;48;5;255m #{square&.model || ' '} \e[0m"
+          # Light background
+          print "\e[48;5;186m #{square&.model || ' '} \e[0m"
         else
-          # Black background, white foreground
-          print "\e[38;5;255;48;5;0m #{square&.model || ' '} \e[0m"
+          # Dark background
+          print "\e[48;5;101m #{square&.model || ' '} \e[0m"
         end
       end
       puts  # To move to the next line after printing each row
