@@ -33,6 +33,11 @@ class Board
     square.nil?
   end
 
+  def move_piece(start, destination)
+    squares[destination[0]][destination[1]] = squares[start[0]][start[1]]
+    squares[start[0]][start[1]] = nil
+  end
+
   private
 
   def setup_pieces(color, pieces)
