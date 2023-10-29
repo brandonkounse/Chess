@@ -29,6 +29,10 @@ class Board
     end
   end
 
+  def square_empty?(square)
+    square.nil?
+  end
+
   private
 
   def setup_pieces(color, pieces)
