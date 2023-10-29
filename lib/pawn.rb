@@ -28,10 +28,11 @@ class Pawn
   private
 
   def set_model
+    # U+265F
     @model = if color == :black
-               '♟' # U+265F
+               "\e[38;5;0m♟"
              else
-               '♙' # U+2659
+               "\e[38;5;255m♟"
              end
   end
 end
