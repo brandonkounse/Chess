@@ -4,7 +4,11 @@
 class Player
   attr_reader :color
 
-  def initialize(color = nil)
+  def initialize(color)
     @color = color
+  end
+
+  def input
+    gets.chomp
   end
 end
