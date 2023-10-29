@@ -12,10 +12,11 @@ class Bishop
   private
 
   def set_model
+    # U+265D
     @model = if color == :black
-               '♝' # U+265D
+               "\e[38;5;0m♝"
              else
-               '♗' # U+2657
+               "\e[38;5;255m♝"
              end
   end
 end

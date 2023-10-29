@@ -12,10 +12,11 @@ class Knight
   private
 
   def set_model
+    # U+265E
     @model = if color == :black
-               '♞' # U+265E
+               "\e[38;5;0m♞"
              else
-               '♘' # U+2658
+               "\e[38;5;255m♞"
              end
   end
 end

@@ -12,10 +12,11 @@ class Queen
   private
 
   def set_model
+    # U+265B
     @model = if color == :black
-               '♛' # U+265B
+               "\e[38;5;0m♛"
              else
-               '♕' # U+2655
+               "\e[38;5;255m♛"
              end
   end
 end

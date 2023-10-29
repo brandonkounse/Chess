@@ -12,10 +12,11 @@ class Rook
   private
 
   def set_model
+    # U+265C
     @model = if color == :black
-               '♜' # U+265C
+               "\e[38;5;0m♜"
              else
-               '♖' # U+2656
+               "\e[38;5;255m♜"
              end
   end
 end
