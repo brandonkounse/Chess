@@ -57,4 +57,24 @@ describe Board do
       end
     end
   end
+
+  describe 'move_piece' do
+    subject(:board) { Board.new }
+
+    context 'when moving a piece' do
+      it 'moves piece from start square to destination square' do
+        pawn = board.squares[1][0]
+        board.move_piece([1, 0], [3, 1])
+        expect(board.squares[3][1]).to eq(pawn)
+      end
+    end
+
+    context 'when moving another piece' do
+      it 'moves piece from start square to destination square' do
+        knight = board.squares[0][1]
+        board.move_piece([0, 1], [2, 2])
+        expect(board.squares[2][2]).to eq(knight)
+      end
+    end
+  end
 end
