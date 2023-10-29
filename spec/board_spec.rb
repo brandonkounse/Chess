@@ -44,5 +44,17 @@ describe Board do
         expect(g1.color).to be :white
       end
     end
+
+    context 'when checking if square is empty' do
+      it 'returns true if empty' do
+        square = new_board.squares[2][0]
+        expect(new_board.square_empty?(square)).to be true
+      end
+
+      it 'returns false if not empty' do
+        square = new_board.squares[6][3] # white queen
+        expect(new_board.square_empty?(square)).to be false
+      end
+    end
   end
 end
