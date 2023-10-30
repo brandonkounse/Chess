@@ -2,30 +2,32 @@
 
 # Pawn piece for chess board
 class Pawn
-  attr_reader :color, :model, :has_moved, :movement
+  attr_reader :color, :model, :has_moved, :basic_movement, :attack_movement, :special_movement
 
-  def initialize(color = nil)
+  def initialize(color)
     @color = color
     @has_moved = false
-    @movement = {
-      forward_left: [1, -1],
-      forward_right: [1, 1],
-      forward_once: [1, 0],
-      forward_twice: [2, 0],
-      en_passant_left: [2, -1],
-      en_passant_right: [2, 1]
-    }
+    set_movements
     set_model
   end
 
-  def move(coords)
-    return unless movement.value?(coords)
-
-    @has_moved = true
-    coords
-  end
-
   private
+
+  def set_movements
+    direction = color == :white ? 1 : -1
+    @basic_movement = {
+      forward_once: [direction, 0],
+      forward_twice: [2 * direction, 0]
+    }
+    @attack_movement = {
+      forward_left: [direction, -1],
+      forward_right: [direction, 1]
+    }
+    @special_movement = {
+      en_passant_left: [2 * direction, -1],
+      en_passant_right: [2 * direction, 1]
+    }
+  end
 
   def set_model
     # U+265F
