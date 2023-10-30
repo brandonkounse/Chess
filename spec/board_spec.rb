@@ -64,7 +64,9 @@ describe Board do
     context 'when moving a piece' do
       it 'moves piece from start square to destination square' do
         pawn = board.squares[1][0]
-        board.move_piece([1, 0], [3, 1])
+        start = [1, 0]
+        destination = [3, 1]
+        board.move_piece(start, destination)
         expect(board.squares[3][1]).to eq(pawn)
       end
     end
@@ -72,8 +74,21 @@ describe Board do
     context 'when moving another piece' do
       it 'moves piece from start square to destination square' do
         knight = board.squares[0][1]
-        board.move_piece([0, 1], [2, 2])
+        start = [0, 1]
+        destination = [2, 2]
+        board.move_piece(start, destination)
         expect(board.squares[2][2]).to eq(knight)
+      end
+
+      it 'moves piece from start square to destination square' do
+        pawn_start = [5, 3]
+        pawn_destination = [4, 3]
+        bishop = board.squares[7][2]
+        bishop_start = [7, 2]
+        bishop_destination = [3, 6]
+        board.move_piece(pawn_start, pawn_destination)
+        board.move_piece(bishop_start, bishop_destination)
+        expect(board.squares[3][6]).to eq(bishop)
       end
     end
   end
