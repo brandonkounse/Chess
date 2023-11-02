@@ -11,6 +11,14 @@ class Pawn
     set_model
   end
 
+  def can_move?(starting_coordinates, destination_coordinates)
+    requested_movement = [destination_coordinates[0] - starting_coordinates[0],
+                          destination_coordinates[1] - starting_coordinates[1]]
+    basic_movement.include?(requested_movement) ||
+      attack_movement.include?(requested_movement) ||
+      special_movement.include?(requested_movement)
+  end
+
   private
 
   def set_movements
