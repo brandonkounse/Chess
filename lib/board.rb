@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'army'
+require 'pry-byebug'
 
 # board to interface with pieces
 class Board
@@ -29,13 +30,11 @@ class Board
     end
   end
 
-  def square_empty?(square)
-    square.nil?
-  end
+  def move_piece(starting_square, destination_square)
+    return unless legal_move?(starting_square, destination_square)
 
-  def move_piece(start, destination)
-    squares[destination[0]][destination[1]] = squares[start[0]][start[1]]
-    squares[start[0]][start[1]] = nil
+    squares[destination_square[0]][destination_square[1]] = squares[starting_square[0]][starting_square[1]]
+    squares[starting_square[0]][starting_square[1]] = nil
   end
 
   private
@@ -69,5 +68,14 @@ class Board
     else
       squares[white_pawn_row].map! { Army::PAWN.new(color) }
     end
+  end
+
+  def legal_move?(starting_square, destination_square)
+    squares[destination_square[0]][destination_square[1]].nil? ||
+      square_have_opposing_color(starting_square, destination_square)
+  end
+
+  def square_have_opposing_color?(starting_square, destination_square)
+    squares[starting_square[0]][starting_square[1]].color != squares[destination_square[0]][destination_square[1]]
   end
 end
