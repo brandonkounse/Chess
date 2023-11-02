@@ -31,10 +31,11 @@ class Board
   end
 
   def move_piece(starting_square, destination_square)
-    return unless legal_move?(starting_square, destination_square)
+    return :invalid_move unless legal_move?(starting_square, destination_square)
 
     squares[destination_square[0]][destination_square[1]] = squares[starting_square[0]][starting_square[1]]
     squares[starting_square[0]][starting_square[1]] = nil
+    :success
   end
 
   private
@@ -71,11 +72,25 @@ class Board
   end
 
   def legal_move?(starting_square, destination_square)
-    squares[destination_square[0]][destination_square[1]].nil? ||
-      square_have_opposing_color(starting_square, destination_square)
+    empty_destination?(destination_square) ||
+      opponent_piece_at_destination?(starting_square, destination_square) &&
+        piece_can_move?(starting_square, destination_square)
+  end
+
+  def empty_destination?(destination_square)
+    squares[destination_square[0]][destination_square[1]].nil?
+  end
+
+  def opponent_piece_at_destination?(starting_square, destination_square)
+    square_have_opposing_color?(starting_square, destination_square)
   end
 
   def square_have_opposing_color?(starting_square, destination_square)
     squares[starting_square[0]][starting_square[1]].color != squares[destination_square[0]][destination_square[1]]
+  end
+
+  def piece_can_move?(starting_square, destination_square)
+    piece = squares[starting_square[0]][starting_square[1]]
+    piece&.can_move?(starting_square, destination_square)
   end
 end
