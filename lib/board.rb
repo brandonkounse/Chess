@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative 'army'
-require 'pry-byebug'
 
 # board to interface with pieces
 class Board
@@ -72,9 +71,9 @@ class Board
   end
 
   def legal_move?(starting_square, destination_square)
-    empty_destination?(destination_square) ||
-      opponent_piece_at_destination?(starting_square, destination_square) &&
-        piece_can_move?(starting_square, destination_square)
+    return false unless piece_can_move?(starting_square, destination_square)
+
+    empty_destination?(destination_square) || opponent_piece_at_destination?(starting_square, destination_square)
   end
 
   def empty_destination?(destination_square)
@@ -86,7 +85,7 @@ class Board
   end
 
   def square_have_opposing_color?(starting_square, destination_square)
-    squares[starting_square[0]][starting_square[1]].color != squares[destination_square[0]][destination_square[1]]
+    squares[starting_square[0]][starting_square[1]].color != squares[destination_square[0]][destination_square[1]].color
   end
 
   def piece_can_move?(starting_square, destination_square)
