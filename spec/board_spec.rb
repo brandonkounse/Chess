@@ -2,6 +2,7 @@
 
 require_relative 'spec_helper'
 require_relative '../lib/board'
+require 'pry-byebug'
 
 describe Board do
   describe 'initialize' do
@@ -49,34 +50,26 @@ describe Board do
   describe 'move_piece' do
     subject(:board) { Board.new }
 
-    context 'when moving a piece' do
-      it 'moves piece from start square to destination square' do
+    context 'when moving a pawn' do
+      let(:start) { [[1, 0], [6, 0], [1, 6]] }
+      let(:destination) { [[3, 0], [5, 0], [5, 6]] }
+
+      it 'moves the pawn from the start square to the destination square' do
         pawn = board.squares[1][0]
-        start = [1, 0]
-        destination = [3, 1]
-        board.move_piece(start, destination)
-        expect(board.squares[3][1]).to eq(pawn)
-      end
-    end
-
-    context 'when moving another piece' do
-      it 'moves piece from start square to destination square' do
-        knight = board.squares[0][1]
-        start = [0, 1]
-        destination = [2, 2]
-        board.move_piece(start, destination)
-        expect(board.squares[2][2]).to eq(knight)
+        board.move_piece(start[0], destination[0])
+        expect(board.squares[3][0]).to eq(pawn)
+        expect(board.squares[1][0]).to be_nil
       end
 
-      it 'moves piece from start square to destination square' do
-        pawn_start = [5, 3]
-        pawn_destination = [4, 3]
-        bishop = board.squares[7][2]
-        bishop_start = [7, 2]
-        bishop_destination = [3, 6]
-        board.move_piece(pawn_start, pawn_destination)
-        board.move_piece(bishop_start, bishop_destination)
-        expect(board.squares[3][6]).to eq(bishop)
+      it 'moves white pawn one space forward to destination square' do
+        pawn = board.squares[6][0]
+        board.move_piece(start[1], destination[1])
+        expect(board.squares[5][0]).to eq(pawn)
+        expect(board.squares[6][0]).to be_nil
+      end
+
+      it 'fails to move pawn due to being out of range' do
+        expect(board.move_piece(start[2], destination[2])).to be :invalid_move
       end
     end
   end
