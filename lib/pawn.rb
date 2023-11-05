@@ -2,7 +2,7 @@
 
 # Pawn piece for chess board
 class Pawn
-  attr_reader :color, :model, :has_moved, :basic_movement, :attack_movement, :special_movement
+  attr_reader :color, :model, :has_moved
 
   def initialize(color)
     @color = color
@@ -14,9 +14,9 @@ class Pawn
   def can_move?(starting_coordinates, destination_coordinates)
     requested_movement = [starting_coordinates[0] - destination_coordinates[0],
                           starting_coordinates[1] - destination_coordinates[1]]
-    basic_movement.value?(requested_movement) ||
-      attack_movement.value?(requested_movement) ||
-      special_movement.value?(requested_movement)
+    @basic_movement.value?(requested_movement) ||
+      @attack_movement.value?(requested_movement) ||
+      @special_movement.value?(requested_movement)
   end
 
   private
