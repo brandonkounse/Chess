@@ -1,20 +1,15 @@
 # frozen_string_literal: true
 
+require_relative 'piece'
+
 # Knight piece for chess board
-class Knight
+class Knight < Piece
   attr_reader :color, :model
 
   def initialize(color)
     @color = color
     set_model
     set_movement
-  end
-
-  def can_move?(starting_coordinates, destination_coordinates)
-    requested_movement = [starting_coordinates[0] - destination_coordinates[0],
-                          starting_coordinates[1] - destination_coordinates[1]]
-
-    @movement.any? { requested_movement }
   end
 
   private
