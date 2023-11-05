@@ -1,16 +1,19 @@
 # frozen_string_literal: true
 
+require_relative 'piece'
+
 # Pawn piece for chess board
-class Pawn
+class Pawn < Piece
   attr_reader :color, :model, :has_moved
 
   def initialize(color)
     @color = color
     @has_moved = false
-    set_movements
+    set_movement
     set_model
   end
 
+  # polymorphic override for pawn class to work with #can_move?
   def can_move?(starting_coordinates, destination_coordinates)
     requested_movement = [starting_coordinates[0] - destination_coordinates[0],
                           starting_coordinates[1] - destination_coordinates[1]]
@@ -21,7 +24,7 @@ class Pawn
 
   private
 
-  def set_movements
+  def set_movement
     direction = color == :white ? 1 : -1
     @basic_movement = {
       forward_once: [direction, 0],
