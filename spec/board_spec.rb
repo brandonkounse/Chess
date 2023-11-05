@@ -75,7 +75,7 @@ describe Board do
 
     context 'when moving a knight' do
       let(:start) { [[7, 1], [7, 6], [0, 1], [0, 6]] }
-      let(:destination) { [[5, 2], [5, 5], [2, 2], [2, 6]] }
+      let(:destination) { [[5, 2], [5, 5], [2, 2], [2, 5]] }
 
       it 'moves white knight from B1 to C3' do
         knight = board.squares[7][1]
@@ -98,11 +98,24 @@ describe Board do
         expect(board.squares[0][1]).to be_nil
       end
 
-      it 'moves black knight from G8 to E6' do
+      it 'moves black knight from G8 to F6' do
         knight = board.squares[0][6]
         board.move_piece(start[3], destination[3])
-        expect(board.squares[2][6]).to eq(knight)
+        expect(board.squares[2][5]).to eq(knight)
         expect(board.squares[0][6]).to be_nil
+      end
+    end
+
+    context 'when moving a bishop' do
+      let(:start) { [[7, 2], [7, 5], [0, 2], [0, 5]] }
+      let(:destination) { [[4, 5], [4, 2], [3, 5], [3, 2]] }
+
+      xit 'fails move from C1 to F4 due to pawn on D2' do
+
+      end
+
+      xit 'moves white bishop from C1 to F4' do
+
       end
     end
   end
