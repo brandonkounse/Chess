@@ -73,10 +73,10 @@ class Board
   def legal_move?(starting_square, destination_square)
     return false unless piece_can_move?(starting_square, destination_square)
 
-    empty_destination?(destination_square) || opponent_piece_at_destination?(starting_square, destination_square)
+    square_empty?(destination_square) || opponent_piece_at_destination?(starting_square, destination_square)
   end
 
-  def empty_destination?(destination_square)
+  def square_empty?(destination_square)
     squares[destination_square[0]][destination_square[1]].nil?
   end
 
