@@ -111,11 +111,28 @@ describe Board do
       let(:destination) { [[4, 5], [4, 2], [3, 5], [3, 2]] }
 
       xit 'fails move from C1 to F4 due to pawn on D2' do
-
+        expect(board.move_piece(start[0], destination[0])).to be :invalid_move
       end
 
-      xit 'moves white bishop from C1 to F4' do
+      it 'fails move from C1 to C4 due to invalid movement' do
+        destination = board.squares[4][2]
+        expect(board.move_piece(start[0], destination)).to be :invalid_move
+      end
 
+      it 'moves white bishop from C1 to F4' do
+        board.squares[6][3] = nil
+        bishop = board.squares[7][2]
+        board.move_piece(start[0], destination[0])
+        expect(board.squares[4][5]).to eq(bishop)
+        expect(board.squares[7][2]).to be_nil
+      end
+
+      it 'moves white bishop from F1 to C4' do
+        board.squares[6][4] = nil
+        bishop = board.squares[7][5]
+        board.move_piece(start[1], destination[1])
+        expect(board.squares[4][2]).to eq(bishop)
+        expect(board.squares[7][5]).to be_nil
       end
     end
   end
