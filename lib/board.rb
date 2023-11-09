@@ -71,13 +71,17 @@ class Board
   end
 
   def legal_move?(starting_square, destination_square)
-    return false unless piece_can_move?(starting_square, destination_square)
+    return false unless piece_can_move?(starting_square, destination_square) && path_empty?(piece_path(starting_square, destination_square))
 
     square_empty?(destination_square) || opponent_piece_at_destination?(starting_square, destination_square)
   end
 
   def square_empty?(destination_square)
     squares[destination_square[0]][destination_square[1]].nil?
+  end
+
+  def path_empty?(path)
+    path.all? { |x, y| squares[x][y].nil? }
   end
 
   def opponent_piece_at_destination?(starting_square, destination_square)
@@ -91,5 +95,10 @@ class Board
   def piece_can_move?(starting_square, destination_square)
     piece = squares[starting_square[0]][starting_square[1]]
     piece&.can_move?(starting_square, destination_square)
+  end
+
+  def piece_path(starting_square, destination_square)
+    piece = squares[starting_square[0]][starting_square[1]]
+    piece&.generate_path(starting_square, destination_square)
   end
 end
