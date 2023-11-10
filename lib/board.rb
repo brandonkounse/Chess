@@ -87,10 +87,10 @@ class Board
   end
 
   def opponent_piece_at_destination?(starting_square, destination_square)
-    square_have_opposing_color?(starting_square, destination_square)
+    piece_have_opposing_color?(starting_square, destination_square)
   end
 
-  def square_have_opposing_color?(starting_square, destination_square)
+  def piece_have_opposing_color?(starting_square, destination_square)
     squares[starting_square[0]][starting_square[1]].color != squares[destination_square[0]][destination_square[1]].color
   end
 
