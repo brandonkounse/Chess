@@ -110,7 +110,7 @@ describe Board do
       let(:start) { [[7, 2], [7, 5], [0, 2], [0, 5]] }
       let(:destination) { [[4, 5], [4, 2], [3, 5], [3, 2]] }
 
-      xit 'fails move from C1 to F4 due to pawn on D2' do
+      it 'fails move from C1 to F4 due to pawn on D2' do
         expect(board.move_piece(start[0], destination[0])).to be :invalid_move
       end
 
