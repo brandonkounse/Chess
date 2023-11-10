@@ -12,4 +12,8 @@ class Piece
 
     @movement.any? { |movement| movement == requested_movement }
   end
+
+  def generate_path(_starting_coordinates, _destination_coordinates)
+    nil
+  end
 end
