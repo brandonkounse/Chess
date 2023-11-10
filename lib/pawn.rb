@@ -27,6 +27,12 @@ class Pawn < Piece
     nil
   end
 
+  def update_moved_status(coordinates)
+    @has_moved = true if (color == :black && coordinates[0] != 1) || (color == :white && coordinates[0] != 6)
+
+    @has_moved
+  end
+
   private
 
   def set_movement
