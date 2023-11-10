@@ -4,8 +4,8 @@ require_relative 'spec_helper'
 require_relative '../lib/bishop'
 
 describe Bishop do
-  let(:white) { 'white' }
-  let(:black) { 'black' }
+  let(:white) { :white }
+  let(:black) { :black }
 
   describe 'initialize' do
     context 'when a new bishop is created' do
