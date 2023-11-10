@@ -25,7 +25,7 @@ class Board
           print "\e[48;5;101m #{square&.model || ' '} \e[0m"
         end
       end
-      puts  # To move to the next line after printing each row
+      puts # To move to the next line after printing each row
     end
   end
 
@@ -81,6 +81,8 @@ class Board
   end
 
   def path_empty?(path)
+    return true if path.nil? # Knight's will move without a path
+
     path.all? { |x, y| squares[x][y].nil? }
   end
 
