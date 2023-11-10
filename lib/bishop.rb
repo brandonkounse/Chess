@@ -7,6 +7,7 @@ class Bishop < Piece
   attr_reader :color, :model
 
   def initialize(color)
+    super()
     @color = color
     set_model
     set_movement
