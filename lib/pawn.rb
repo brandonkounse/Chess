@@ -4,12 +4,11 @@ require_relative 'piece'
 
 # Pawn piece for chess board
 class Pawn < Piece
-  attr_reader :color, :model, :has_moved
+  attr_reader :color, :model
 
   def initialize(color)
     super()
     @color = color
-    @has_moved = false
     set_movement
     set_model
   end
@@ -27,10 +26,11 @@ class Pawn < Piece
     nil
   end
 
-  def update_moved_status(coordinates)
-    @has_moved = true if (color == :black && coordinates[0] != 1) || (color == :white && coordinates[0] != 6)
+  def check_move_status(new_coordinates)
+    initial_row = (color == :black ? 1 : 6)
+    return true if new_coordinates[0] != initial_row
 
-    @has_moved
+    false
   end
 
   private
