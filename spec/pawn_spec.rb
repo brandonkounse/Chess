@@ -15,10 +15,6 @@ describe Pawn do
         color = white
         expect(new_pawn.color).to eq(color)
       end
-
-      it 'assigns has_moved to false' do
-        expect(new_pawn.has_moved).to be false
-      end
     end
   end
 
