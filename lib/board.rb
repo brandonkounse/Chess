@@ -29,11 +29,11 @@ class Board
     end
   end
 
-  def move_piece(starting_square, destination_square)
-    return :invalid_move unless legal_move?(starting_square, destination_square)
+  def move_piece(start, dest)
+    return :invalid_move unless legal_move?(start, dest)
 
-    squares[destination_square[0]][destination_square[1]] = squares[starting_square[0]][starting_square[1]]
-    squares[starting_square[0]][starting_square[1]] = nil
+    squares[dest[0]][dest[1]] = squares[start[0]][start[1]]
+    squares[start[0]][start[1]] = nil
     :success
   end
 
@@ -70,37 +70,47 @@ class Board
     end
   end
 
-  def legal_move?(starting_square, destination_square)
-    return false unless piece_can_move?(starting_square, destination_square) && path_empty?(piece_path(starting_square, destination_square))
-
-    square_empty?(destination_square) || opponent_piece_at_destination?(starting_square, destination_square)
+  def legal_move?(start, dest)
+    valid_basic_move?(start, dest) && valid_capture_move?(start, dest)
   end
 
-  def square_empty?(destination_square)
-    squares[destination_square[0]][destination_square[1]].nil?
+  def valid_basic_move?(start, dest)
+    piece_can_move?(start, dest) && path_empty?(piece_path(start, dest))
+  end
+
+  def valid_capture_move?(start, dest)
+    square_empty?(dest) || opponent_piece_at_destination?(start, dest)
+  end
+
+  def square_empty?(dest)
+    squares[dest[0]][dest[1]].nil?
   end
 
   def path_empty?(path)
-    return true if path.nil? # Knight's will move without a path
+    return true if path.nil? # Knights will move without a path
 
     path.all? { |x, y| squares[x][y].nil? }
   end
 
-  def opponent_piece_at_destination?(starting_square, destination_square)
-    piece_have_opposing_color?(starting_square, destination_square)
+  def opponent_piece_at_destination?(start, dest)
+    piece_have_opposing_color?(start, dest)
   end
 
-  def piece_have_opposing_color?(starting_square, destination_square)
-    squares[starting_square[0]][starting_square[1]].color != squares[destination_square[0]][destination_square[1]].color
+  def piece_have_opposing_color?(start, dest)
+    squares[start[0]][start[1]].color != squares[dest[0]][dest[1]].color
   end
 
-  def piece_can_move?(starting_square, destination_square)
-    piece = squares[starting_square[0]][starting_square[1]]
-    piece&.can_move?(starting_square, destination_square)
+  def piece_can_move?(start, dest)
+    piece = squares[start[0]][start[1]]
+    piece&.can_move?(start, dest)
   end
 
-  def piece_path(starting_square, destination_square)
-    piece = squares[starting_square[0]][starting_square[1]]
-    piece&.generate_path(starting_square, destination_square)
+  def piece_path(start, dest)
+    piece = squares[start[0]][start[1]]
+    piece&.generate_path(start, dest)
+  end
+
+  def check_if_pawn_has_moved(pawn)
+    pawn.check_move_status
   end
 end
