@@ -110,7 +110,7 @@ class Board
     piece&.generate_path(start, dest)
   end
 
-  def check_if_pawn_has_moved(pawn)
+  def check_if_pawn_has_moved?(pawn)
     pawn.check_move_status
   end
 end
