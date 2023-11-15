@@ -10,8 +10,8 @@ class Board
 
   def initialize
     @squares = Array.new(8) { Array.new(8) { nil } }
-    setup_pieces(:white, Army::PIECE_ORDER)
-    setup_pieces(:black, Army::PIECE_ORDER)
+    setup_board(:white, Army::PIECE_ORDER)
+    setup_board(:black, Army::PIECE_ORDER)
   end
 
   def display
@@ -39,7 +39,7 @@ class Board
 
   private
 
-  def setup_pieces(color, pieces)
+  def setup_board(color, pieces)
     setup_major_pieces(color, pieces)
     setup_pawns(color)
   end
