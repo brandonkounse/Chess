@@ -47,6 +47,15 @@ describe Pawn do
           expect(white_pawn.can_move?(start[1], destination[1])).to be false
         end
       end
+
+      context 'when pawn has already moved' do
+        let(:start) { [5, 1] }
+        let(:destination) { [3, 1] }
+
+        it 'fails to move two spaces forward' do
+          expect(white_pawn.can_move?(start, destination)).to be false
+        end
+      end
     end
 
     context 'when black pawn' do
@@ -75,6 +84,15 @@ describe Pawn do
 
         it 'returns false with ([1, 4], [5, 5])' do
           expect(black_pawn.can_move?(start[1], destination[1])).to be false
+        end
+      end
+
+      context 'when pawn has already moved' do
+        let(:start) { [3, 3] }
+        let(:destination) { [5, 3] }
+
+        it 'fails to move two spaces forward' do
+          expect(black_pawn.can_move?(start, destination)).to be false
         end
       end
     end
