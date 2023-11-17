@@ -16,6 +16,8 @@ class Pawn < Piece
   # polymorphic override for pawn class to work with #can_move?
   def can_move?(starting_coordinates, destination_coordinates)
     requested_movement = calculate_movement(starting_coordinates, destination_coordinates)
+    return false if requested_movement == @movement[:forward_twice] && check_move_status(starting_coordinates)
+
     @movement.value?(requested_movement)
   end
 
