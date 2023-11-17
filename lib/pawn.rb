@@ -40,9 +40,7 @@ class Pawn < Piece
       forward_once: [direction, 0],
       forward_twice: [2 * direction, 0],
       forward_left: [direction, -1],
-      forward_right: [direction, 1],
-      en_passant_left: [2 * direction, -1],
-      en_passant_right: [2 * direction, 1]
+      forward_right: [direction, 1]
     }
   end
 
