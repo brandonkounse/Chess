@@ -26,9 +26,9 @@ class Pawn < Piece
     nil
   end
 
-  def check_move_status(new_coordinates)
+  def check_move_status(current_coordinates)
     initial_row = (color == :black ? 1 : 6)
-    return true if new_coordinates[0] != initial_row
+    return true if current_coordinates[0] != initial_row
 
     false
   end
