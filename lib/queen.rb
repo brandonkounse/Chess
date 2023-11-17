@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 # Queen piece for chess board
-class Queen
+class Queen < Piece
   attr_reader :color, :model
 
   def initialize(color)
+    super()
     @color = color
     set_model
+    set_movement
   end
 
   private
@@ -18,5 +20,9 @@ class Queen
              else
                "\e[38;5;255m♛"
              end
+  end
+
+  def set_movement
+    @movement = [[1, 1], [1, -1], [-1, -1], [-1, 1], [1, 0], [-1, 0], [0, 1], [0, -1]]
   end
 end
