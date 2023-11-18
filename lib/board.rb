@@ -39,6 +39,8 @@ class Board
 
   private
 
+  # This section is for the arrangement of pieces on the board
+
   def setup_board(color, pieces)
     setup_major_pieces(color, pieces)
     setup_pawns(color)
@@ -70,6 +72,8 @@ class Board
     end
   end
 
+  # This section is for pieces making moves, their legality, and interfacing with piece classes
+
   def legal_move?(start, dest)
     valid_basic_move?(start, dest) && valid_capture_move?(start, dest)
   end
@@ -93,10 +97,6 @@ class Board
   end
 
   def opponent_piece_at_destination?(start, dest)
-    piece_have_opposing_color?(start, dest)
-  end
-
-  def piece_have_opposing_color?(start, dest)
     squares[start[0]][start[1]].color != squares[dest[0]][dest[1]].color
   end
 
