@@ -2,7 +2,6 @@
 
 require_relative 'spec_helper'
 require_relative '../lib/board'
-require 'pry-byebug'
 
 describe Board do
   describe 'initialize' do
@@ -51,8 +50,8 @@ describe Board do
     subject(:board) { Board.new }
 
     context 'when moving a pawn' do
-      let(:start) { [[1, 0], [6, 0], [1, 6]] }
-      let(:destination) { [[3, 0], [5, 0], [5, 6]] }
+      let(:start) { [[1, 0], [6, 0], [1, 6], [6, 1]] }
+      let(:destination) { [[3, 0], [5, 0], [5, 6], [4, 1]] }
 
       it 'moves black pawn from A7 to A5' do
         pawn = board.squares[1][0]
@@ -71,17 +70,28 @@ describe Board do
       it 'fails to move black pawn from G7 to G2' do
         expect(board.move_piece(start[2], destination[2])).to be :invalid_move
       end
+
+      it 'fails to move forward twice when piece is in the way' do
+        board.squares[5][1] = Bishop.new(:black)
+        expect(board.move_piece(start[3], destination[3])).to be :invalid_move
+      end
     end
 
     context 'when capturing another piece' do
       let(:white_pawn) { Pawn.new(:white) }
       let(:black_pawn) { Pawn.new(:black) }
 
-      xit 'fails to capture piece on forward movement' do
+      it 'fails to capture piece on forward movement' do
         board.squares[4][1] = white_pawn
         board.squares[3][1] = black_pawn
 
         expect(board.move_piece([4, 1], [3, 1])).to be :invalid_move
+      end
+
+      it 'successfully captures piece from C2 to D3' do
+        board.squares[5][3] = Queen.new(:black)
+        expect(board.move_piece([6, 2], [5, 3])).to be :success
+        expect(board.squares[5][3]).to be_a Pawn
       end
     end
 
