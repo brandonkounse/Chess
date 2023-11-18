@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'army'
+require 'pry-byebug'
 
 # board to interface with pieces
 class Board
@@ -83,7 +84,13 @@ class Board
   end
 
   def valid_capture_move?(start, dest)
-    square_empty?(dest) || opponent_piece_at_destination?(start, dest)
+    # binding.pry
+    piece = squares[start[0]][start[1]]
+    if piece.is_a?(Pawn) && opponent_piece_at_destination?(start, dest)
+      piece.can_capture?(start, dest)
+    else
+      square_empty?(dest) || opponent_piece_at_destination?(start, dest)
+    end
   end
 
   def square_empty?(dest)
@@ -97,7 +104,11 @@ class Board
   end
 
   def opponent_piece_at_destination?(start, dest)
-    squares[start[0]][start[1]].color != squares[dest[0]][dest[1]].color
+    destination_piece = squares[dest[0]][dest[1]]
+    return false if destination_piece.nil?
+
+    start_piece = squares[start[0]][start[1]]
+    start_piece.color != destination_piece.color
   end
 
   def piece_can_move?(start, dest)
