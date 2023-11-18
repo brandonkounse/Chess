@@ -111,6 +111,6 @@ class Board
   end
 
   def check_if_pawn_has_moved?(pawn)
-    pawn.check_move_status
+    pawn.moved?
   end
 end
