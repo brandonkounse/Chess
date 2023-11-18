@@ -16,7 +16,7 @@ class Pawn < Piece
   # polymorphic override for pawn class to work with #can_move?
   def can_move?(starting_coordinates, destination_coordinates)
     requested_movement = calculate_movement(starting_coordinates, destination_coordinates)
-    return false if requested_movement == @movement[:forward_twice] && check_move_status(starting_coordinates)
+    return false if requested_movement == @movement[:forward_twice] && moved?(starting_coordinates)
 
     @movement.value?(requested_movement)
   end
@@ -28,7 +28,7 @@ class Pawn < Piece
     nil
   end
 
-  def check_move_status(current_coordinates)
+  def moved?(current_coordinates)
     initial_row = (color == :black ? 1 : 6)
     return true if current_coordinates[0] != initial_row
 
@@ -60,6 +60,7 @@ class Pawn < Piece
   end
 
   def calculate_gap(starting_coordinates)
+    # will return the board square directly behind where the pawn's final destination is
     [[starting_coordinates[0] + @movement[:forward_once][0], starting_coordinates[1] + @movement[:forward_once][1]]]
   end
 end
