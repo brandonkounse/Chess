@@ -154,18 +154,18 @@ describe Pawn do
     end
   end
 
-  describe 'check_move_status' do
+  describe 'moved?' do
     context 'when white pawn' do
       subject(:white_pawn) { Pawn.new(white) }
 
       it 'returns false if pawn has not moved' do
         position = [6, 1]
-        expect(white_pawn.check_move_status(position)).to be false
+        expect(white_pawn.moved?(position)).to be false
       end
 
       it 'returns true if pawn has moved' do
         position = [5, 1]
-        expect(white_pawn.check_move_status(position)).to be true
+        expect(white_pawn.moved?(position)).to be true
       end
     end
 
@@ -174,12 +174,12 @@ describe Pawn do
 
       it 'returns false if pawn has not moved' do
         position = [1, 1]
-        expect(black_pawn.check_move_status(position)).to be false
+        expect(black_pawn.moved?(position)).to be false
       end
 
       it 'returns true if pawn has moved' do
         position = [2, 1]
-        expect(black_pawn.check_move_status(position)).to be true
+        expect(black_pawn.moved?(position)).to be true
       end
     end
   end
