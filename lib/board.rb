@@ -109,8 +109,4 @@ class Board
     piece = squares[start[0]][start[1]]
     piece&.generate_path(start, dest)
   end
-
-  def check_if_pawn_has_moved?(pawn)
-    pawn.moved?
-  end
 end
