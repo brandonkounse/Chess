@@ -2,6 +2,9 @@
 
 # Piece superclass for chess pieces
 class Piece
+  X = 0 # x coordinate
+  Y = 1 # y coordinate
+
   def initialize; end
 
   def can_move?(starting_coordinates, destination_coordinates)
