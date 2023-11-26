@@ -75,23 +75,23 @@ describe Board do
         board.squares[5][1] = Bishop.new(:black)
         expect(board.move_piece(start[3], destination[3])).to be :invalid_move
       end
-    end
 
-    context 'when capturing another piece' do
-      let(:white_pawn) { Pawn.new(:white) }
-      let(:black_pawn) { Pawn.new(:black) }
+      context 'when capturing another piece' do
+        let(:white_pawn) { Pawn.new(:white) }
+        let(:black_pawn) { Pawn.new(:black) }
 
-      it 'fails to capture piece on forward movement' do
-        board.squares[4][1] = white_pawn
-        board.squares[3][1] = black_pawn
+        it 'fails to capture piece on forward movement' do
+          board.squares[4][1] = white_pawn
+          board.squares[3][1] = black_pawn
 
-        expect(board.move_piece([4, 1], [3, 1])).to be :invalid_move
-      end
+          expect(board.move_piece([4, 1], [3, 1])).to be :invalid_move
+        end
 
-      it 'successfully captures piece from C2 to D3' do
-        board.squares[5][3] = Queen.new(:black)
-        expect(board.move_piece([6, 2], [5, 3])).to be :success
-        expect(board.squares[5][3]).to be_a Pawn
+        it 'successfully captures piece from C2 to D3' do
+          board.squares[5][3] = Queen.new(:black)
+          expect(board.move_piece([6, 2], [5, 3])).to be :success
+          expect(board.squares[5][3]).to be_a Pawn
+        end
       end
     end
 
@@ -126,6 +126,30 @@ describe Board do
         expect(board.squares[2][5]).to eq(knight)
         expect(board.squares[0][6]).to be_nil
       end
+
+      context 'when capturing another piece' do
+        it 'fails to capture out of bounds opponent B8 to D4' do
+          board.squares[4][3] = Bishop.new(:white)
+          expect(board.move_piece([0, 1], [4, 3])).to be :invalid_move
+        end
+
+        it 'fails to capture piece of same color B8 to C6' do
+          board.squares[2][2] = Queen.new(:black)
+          expect(board.move_piece([0, 1], [2, 2])).to be :invalid_move
+        end
+
+        it 'successfully captures piece from B8 to C6' do
+          board.squares[2][2] = Queen.new(:white)
+          expect(board.move_piece([0, 1], [2, 2])).to be :success
+          expect(board.squares[2][2]).to be_a Knight
+        end
+
+        it 'successfully captures piece from B1 to C3' do
+          board.squares[5][2] = Bishop.new(:black)
+          expect(board.move_piece([7, 1], [5, 2])).to be :success
+          expect(board.squares[5][2]).to be_a Knight
+        end
+      end
     end
 
     context 'when moving a bishop' do
@@ -155,6 +179,21 @@ describe Board do
         board.move_piece(start[1], destination[1])
         expect(board.squares[4][2]).to eq(bishop)
         expect(board.squares[7][5]).to be_nil
+      end
+
+      context 'when capturing another piece' do
+        it 'fails to capture piece of same color C5 to D4' do
+          board.squares[3][2] = Bishop.new(:black)
+          board.squares[4][3] = Pawn.new(:black)
+          expect(board.move_piece([3, 2], [4, 3])).to be :invalid_move
+        end
+
+        it 'successfully captures piece from C5 to D4' do
+          board.squares[3][2] = Bishop.new(:black)
+          board.squares[4][3] = Pawn.new(:white)
+          expect(board.move_piece([3, 2], [4, 3])).to be :success
+          expect(board.squares[4][3]).to be_a Bishop
+        end
       end
     end
 
