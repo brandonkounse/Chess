@@ -4,9 +4,6 @@
 class Queen < Piece
   attr_reader :color, :model
 
-  X = 0 # x coordinate
-  Y = 1 # y coordinate
-
   def initialize(color)
     super()
     @color = color

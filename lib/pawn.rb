@@ -67,6 +67,6 @@ class Pawn < Piece
 
   def calculate_gap(starting_coordinates)
     # will return the board square directly behind where the pawn's final destination is
-    [[starting_coordinates[0] + @movement[:forward_once][0], starting_coordinates[1] + @movement[:forward_once][1]]]
+    [[starting_coordinates[X] + @movement[:forward_once][X], starting_coordinates[Y] + @movement[:forward_once][Y]]]
   end
 end
