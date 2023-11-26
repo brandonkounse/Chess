@@ -4,6 +4,9 @@
 class Queen < Piece
   attr_reader :color, :model
 
+  X = 0 # x coordinate
+  Y = 1 # y coordinate
+
   def initialize(color)
     super()
     @color = color
@@ -13,13 +16,13 @@ class Queen < Piece
 
   def can_move?(starting_coordinates, destination_coordinates)
     @movement.any? do |move_x, move_y|
-      current_move = [starting_coordinates[0] + move_x, starting_coordinates[1] + move_y]
+      current_move = [starting_coordinates[X] + move_x, starting_coordinates[Y] + move_y]
 
       until current_move.any? { |move| move > 7 || move.negative? }
         return true if current_move == destination_coordinates
 
-        current_move[0] += move_x
-        current_move[1] += move_y
+        current_move[X] += move_x
+        current_move[Y] += move_y
       end
     end
   end
@@ -32,8 +35,8 @@ class Queen < Piece
         return path if current_move == destination_coordinates
 
         path << current_move.dup
-        current_move[0] += move_x
-        current_move[1] += move_y
+        current_move[X] += move_x
+        current_move[Y] += move_y
       end
     end
     nil
