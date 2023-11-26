@@ -4,23 +4,19 @@ require_relative 'spec_helper'
 require_relative '../lib/pawn'
 
 describe Pawn do
-  let(:white) { :white }
-  let(:black) { :black }
-
   describe 'initialize' do
     context 'when a new pawn is created' do
-      subject(:new_pawn) { Pawn.new(white) }
+      subject(:new_pawn) { Pawn.new(:white) }
 
       it 'assigns color to the piece' do
-        color = white
-        expect(new_pawn.color).to eq(color)
+        expect(new_pawn.color).to eq(:white)
       end
     end
   end
 
   describe 'can_move?' do
     context 'when white pawn' do
-      subject(:white_pawn) { Pawn.new(white) }
+      subject(:white_pawn) { Pawn.new(:white) }
 
       context 'when given valid path coordinates' do
         let(:start) { [[6, 1], [6, 4]] }
@@ -59,7 +55,7 @@ describe Pawn do
     end
 
     context 'when black pawn' do
-      subject(:black_pawn) { Pawn.new(black) }
+      subject(:black_pawn) { Pawn.new(:black) }
 
       context 'when given valid path coordinates' do
         let(:start) { [[1, 1], [1, 4]] }
@@ -100,7 +96,7 @@ describe Pawn do
 
   describe 'generate_path' do
     context 'when white pawn' do
-      subject(:white_pawn) { Pawn.new(white) }
+      subject(:white_pawn) { Pawn.new(:white) }
 
       context 'when given a valid path' do
         let(:start) { [6, 1] }
@@ -127,7 +123,7 @@ describe Pawn do
     end
 
     context 'when black pawn' do
-      subject(:black_pawn) { Pawn.new(black) }
+      subject(:black_pawn) { Pawn.new(:black) }
 
       context 'when given a valid path' do
         let(:start) { [1, 3] }
@@ -156,7 +152,7 @@ describe Pawn do
 
   describe 'moved?' do
     context 'when white pawn' do
-      subject(:white_pawn) { Pawn.new(white) }
+      subject(:white_pawn) { Pawn.new(:white) }
 
       it 'returns false if pawn has not moved' do
         position = [6, 1]
@@ -170,7 +166,7 @@ describe Pawn do
     end
 
     context 'when black pawn' do
-      subject(:black_pawn) { Pawn.new(black) }
+      subject(:black_pawn) { Pawn.new(:black) }
 
       it 'returns false if pawn has not moved' do
         position = [1, 1]

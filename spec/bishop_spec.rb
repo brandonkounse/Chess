@@ -4,22 +4,18 @@ require_relative 'spec_helper'
 require_relative '../lib/bishop'
 
 describe Bishop do
-  let(:white) { :white }
-  let(:black) { :black }
-
   describe 'initialize' do
     context 'when a new bishop is created' do
-      subject(:new_bishop) { Bishop.new(white) }
+      subject(:new_bishop) { Bishop.new(:white) }
 
       it 'assigns color to the piece' do
-        color = white
-        expect(new_bishop.color).to eq(color)
+        expect(new_bishop.color).to eq(:white)
       end
     end
   end
 
   describe 'can_move?' do
-    subject(:bishop) { Bishop.new(black) }
+    subject(:bishop) { Bishop.new(:black) }
 
     context 'when given valid path coordinates' do
       let(:start) { [[7, 2], [7, 5]] }
@@ -49,7 +45,7 @@ describe Bishop do
   end
 
   describe 'generate_path' do
-    subject(:bishop) { Bishop.new(white) }
+    subject(:bishop) { Bishop.new(:white) }
 
     context 'when given a valid path' do
       let(:start) { [[7, 2], [7, 5]] }
