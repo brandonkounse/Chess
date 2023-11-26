@@ -7,6 +7,7 @@ class Rook < Piece
   attr_reader :color, :model
 
   def initialize(color)
+    super()
     @color = color
     set_movement
     set_model
