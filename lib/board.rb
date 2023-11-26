@@ -7,6 +7,9 @@ require 'pry-byebug'
 class Board
   include Army
 
+  X = 0 # x coordinate
+  Y = 1 # y coordinate
+
   attr_reader :squares
 
   def initialize
@@ -33,8 +36,8 @@ class Board
   def move_piece(start, dest)
     return :invalid_move unless legal_move?(start, dest)
 
-    squares[dest[0]][dest[1]] = squares[start[0]][start[1]]
-    squares[start[0]][start[1]] = nil
+    squares[dest[X]][dest[Y]] = squares[start[X]][start[Y]]
+    squares[start[X]][start[Y]] = nil
     :success
   end
 
@@ -63,13 +66,13 @@ class Board
   end
 
   def setup_pawns(color)
-    black_pawn_row = 1
-    white_pawn_row = 6
+    top_row = 1
+    bottom_row = 6
 
     if color == :black
-      squares[black_pawn_row].map! { Army::PAWN.new(color) }
+      squares[top_row].map! { Army::PAWN.new(color) }
     else
-      squares[white_pawn_row].map! { Army::PAWN.new(color) }
+      squares[bottom_row].map! { Army::PAWN.new(color) }
     end
   end
 
@@ -85,7 +88,7 @@ class Board
 
   def valid_capture_move?(start, dest)
     # binding.pry
-    piece = squares[start[0]][start[1]]
+    piece = squares[start[X]][start[Y]]
     if piece.is_a?(Pawn) && opponent_piece_at_destination?(start, dest)
       piece.can_capture?(start, dest)
     else
@@ -94,7 +97,7 @@ class Board
   end
 
   def square_empty?(dest)
-    squares[dest[0]][dest[1]].nil?
+    squares[dest[X]][dest[Y]].nil?
   end
 
   def path_empty?(path)
@@ -104,20 +107,20 @@ class Board
   end
 
   def opponent_piece_at_destination?(start, dest)
-    destination_piece = squares[dest[0]][dest[1]]
+    destination_piece = squares[dest[X]][dest[Y]]
     return false if destination_piece.nil?
 
-    start_piece = squares[start[0]][start[1]]
+    start_piece = squares[start[X]][start[Y]]
     start_piece.color != destination_piece.color
   end
 
   def piece_can_move?(start, dest)
-    piece = squares[start[0]][start[1]]
+    piece = squares[start[X]][start[Y]]
     piece&.can_move?(start, dest)
   end
 
   def piece_path(start, dest)
-    piece = squares[start[0]][start[1]]
+    piece = squares[start[X]][start[Y]]
     piece&.generate_path(start, dest)
   end
 end
