@@ -21,6 +21,12 @@ class Pawn < Piece
     @movement.value?(requested_movement)
   end
 
+  def can_capture?(starting_coordinates, destination_coordinates)
+    requested_movement = calculate_movement(starting_coordinates, destination_coordinates)
+
+    requested_movement == @movement[:forward_left] || requested_movement == @movement[:forward_right]
+  end
+
   def generate_path(starting_coordinates, destination_coordinates)
     requested_movement = calculate_movement(starting_coordinates, destination_coordinates)
     return calculate_gap(starting_coordinates) if @movement[:forward_twice] == requested_movement
