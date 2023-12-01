@@ -2,22 +2,17 @@
 
 # Piece superclass for chess pieces
 class Piece
-  X = 0 # x coordinate
-  Y = 1 # y coordinate
-
-  def initialize; end
-
-  def can_move?(starting_coordinates, destination_coordinates)
-    requested_movement = calculate_movement(starting_coordinates, destination_coordinates)
-
-    @movement.any? { |movement| movement == requested_movement }
+  def initialize(color)
+    @color = color
   end
 
-  def generate_path(_starting_coordinates, _destination_coordinates)
-    nil
-  end
+  private
 
-  def calculate_movement(starting_coordinates, destination_coordinates)
-    [destination_coordinates[0] - starting_coordinates[0], destination_coordinates[1] - starting_coordinates[1]]
+  def assign_model_from_color(model)
+    if @color == :black
+      "\e[38;5;0m#{model}"
+    else
+      "\e[38;5;255m#{model}"
+    end
   end
 end
