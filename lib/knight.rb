@@ -4,27 +4,11 @@ require_relative 'piece'
 
 # Knight piece for chess board
 class Knight < Piece
-  attr_reader :color, :model
+  attr_reader :color, :model, :movement
 
   def initialize(color)
-    super()
-    @color = color
-    set_model
-    set_movement
-  end
-
-  private
-
-  def set_movement
+    super(color)
+    @model = assign_model_from_color('♞')
     @movement = [[2, 1], [2, -1], [-1, 2], [-1, -2], [1, 2], [1, -2], [-2, 1], [-2, -1]]
-  end
-
-  def set_model
-    # U+265E
-    @model = if color == :black
-               "\e[38;5;0m♞"
-             else
-               "\e[38;5;255m♞"
-             end
   end
 end
