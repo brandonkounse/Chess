@@ -9,6 +9,5 @@ require_relative 'king'
 
 # module for creating sets of colored pieces
 module Army
-  PAWN = Pawn
   PIECE_ORDER = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook].freeze
 end
