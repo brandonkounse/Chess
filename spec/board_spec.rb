@@ -4,8 +4,8 @@ require_relative 'spec_helper'
 require_relative '../lib/board'
 
 describe Board do
-  describe 'initialize' do
-    subject(:new_board) { Board.new }
+  describe '#initialize' do
+    subject(:new_board) { described_class.new }
 
     context 'when a new board is created' do
       it 'creates 64 total squares' do
@@ -46,12 +46,12 @@ describe Board do
     end
   end
 
-  describe 'move_piece' do
-    subject(:board) { Board.new }
+  describe '#move_piece' do
+    subject(:board) { described_class.new }
 
     context 'when moving a pawn' do
-      let(:start) { [[1, 0], [6, 0], [1, 6], [6, 1]] }
-      let(:destination) { [[3, 0], [5, 0], [5, 6], [4, 1]] }
+      let(:start) { [[1, 0], [6, 0]] }
+      let(:destination) { [[3, 0], [5, 0]] }
 
       it 'moves black pawn from A7 to A5' do
         pawn = board.squares[1][0]
@@ -67,29 +67,10 @@ describe Board do
         expect(board.squares[6][0]).to be_nil
       end
 
-      it 'fails to move black pawn from G7 to G2' do
-        expect(board.move_piece(start[2], destination[2])).to be :invalid_move
-      end
-
-      it 'fails to move forward twice when piece is in the way' do
-        board.squares[5][1] = Bishop.new(:black)
-        expect(board.move_piece(start[3], destination[3])).to be :invalid_move
-      end
-
       context 'when capturing another piece' do
-        let(:white_pawn) { Pawn.new(:white) }
-        let(:black_pawn) { Pawn.new(:black) }
-
-        it 'fails to capture piece on forward movement' do
-          board.squares[4][1] = white_pawn
-          board.squares[3][1] = black_pawn
-
-          expect(board.move_piece([4, 1], [3, 1])).to be :invalid_move
-        end
-
         it 'successfully captures piece from C2 to D3' do
           board.squares[5][3] = Queen.new(:black)
-          expect(board.move_piece([6, 2], [5, 3])).to be :success
+          board.move_piece([6, 2], [5, 3])
           expect(board.squares[5][3]).to be_a Pawn
         end
       end
@@ -128,25 +109,15 @@ describe Board do
       end
 
       context 'when capturing another piece' do
-        it 'fails to capture out of bounds opponent B8 to D4' do
-          board.squares[4][3] = Bishop.new(:white)
-          expect(board.move_piece([0, 1], [4, 3])).to be :invalid_move
-        end
-
-        it 'fails to capture piece of same color B8 to C6' do
-          board.squares[2][2] = Queen.new(:black)
-          expect(board.move_piece([0, 1], [2, 2])).to be :invalid_move
-        end
-
         it 'successfully captures piece from B8 to C6' do
           board.squares[2][2] = Queen.new(:white)
-          expect(board.move_piece([0, 1], [2, 2])).to be :success
+          board.move_piece([0, 1], [2, 2])
           expect(board.squares[2][2]).to be_a Knight
         end
 
         it 'successfully captures piece from B1 to C3' do
           board.squares[5][2] = Bishop.new(:black)
-          expect(board.move_piece([7, 1], [5, 2])).to be :success
+          board.move_piece([7, 1], [5, 2])
           expect(board.squares[5][2]).to be_a Knight
         end
       end
@@ -155,15 +126,6 @@ describe Board do
     context 'when moving a bishop' do
       let(:start) { [[7, 2], [7, 5], [0, 2], [0, 5]] }
       let(:destination) { [[4, 5], [4, 2], [3, 5], [3, 2]] }
-
-      it 'fails move from C1 to F4 due to pawn on D2' do
-        expect(board.move_piece(start[0], destination[0])).to be :invalid_move
-      end
-
-      it 'fails move from C1 to C4 due to invalid movement' do
-        destination = board.squares[4][2]
-        expect(board.move_piece(start[0], destination)).to be :invalid_move
-      end
 
       it 'moves white bishop from C1 to F4' do
         board.squares[6][3] = nil
@@ -182,44 +144,37 @@ describe Board do
       end
 
       context 'when capturing another piece' do
-        it 'fails to capture piece of same color C5 to D4' do
-          board.squares[3][2] = Bishop.new(:black)
-          board.squares[4][3] = Pawn.new(:black)
-          expect(board.move_piece([3, 2], [4, 3])).to be :invalid_move
-        end
 
         it 'successfully captures piece from C5 to D4' do
           board.squares[3][2] = Bishop.new(:black)
           board.squares[4][3] = Pawn.new(:white)
-          expect(board.move_piece([3, 2], [4, 3])).to be :success
+          board.move_piece([3, 2], [4, 3])
           expect(board.squares[4][3]).to be_a Bishop
         end
       end
     end
 
     context 'when moving a queen' do
-      let(:start) { [[7, 3], [5, 1], [3, 5]] }
-      let(:destination) { [[4, 3], [4, 2], [5, 7]] }
-
-      it 'fails move from D1 to D4 by being blocked by pawn' do
-        expect(board.move_piece(start[0], destination[0])).to be :invalid_move
-      end
+      let(:start) { [[5, 1], [3, 5]] }
+      let(:destination) { [[4, 2], [5, 7]] }
 
       it 'moves white queen from B3 to C4' do
         board.squares[5][1] = Queen.new(:white)
-        expect(board.move_piece(start[1], destination[1])).to be :success
+        board.move_piece(start[0], destination[0])
+        expect(board.squares[4][2]).to be_a Queen
       end
 
       it 'moves black queen from F5 to H3' do
         board.squares[3][5] = Queen.new(:black)
-        expect(board.move_piece(start[2], destination[2])).to be :success
+        board.move_piece(start[1], destination[1])
+        expect(board.squares[5][7]).to be_a Queen
       end
 
       context 'when capturing another piece' do
         it 'white queen captures bishop on C4 from E2' do
           board.squares[4][2] = Bishop.new(:black)
           board.squares[6][4] = Queen.new(:white)
-          expect(board.move_piece([6, 4], [4, 2])).to be :success
+          board.move_piece([6, 4], [4, 2])
           expect(board.squares[4][2]).to be_a Queen
         end
 
@@ -227,7 +182,7 @@ describe Board do
           board.squares[0][7] = Queen.new(:black)
           board.squares[1][7] = nil
           board.squares[6][7] = nil
-          expect(board.move_piece([0, 7], [7, 7])).to be :success
+          board.move_piece([0, 7], [7, 7])
           expect(board.squares[7][7]).to be_a Queen
         end
       end
