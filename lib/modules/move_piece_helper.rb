@@ -38,6 +38,10 @@ module MovePieceHelper
 
   private
 
+  def out_of_bounds(square)
+    square > 7 || square.negative?
+  end
+
   def pawn_can_move?(pawn, start, dest)
     requested_movement = calculate_movement(start, dest)
     return false if requested_movement == pawn.movement[:forward_twice] && pawn.moved? == true
@@ -60,7 +64,7 @@ module MovePieceHelper
     piece.movement.any? do |move_x, move_y|
       current_move = [start[X] + move_x, start[Y] + move_y]
 
-      until current_move.any? { |move| move > 7 || move.negative? }
+      until current_move.any? { |square| out_of_bounds(square) }
         return true if current_move == dest
 
         current_move[X] += move_x
@@ -84,7 +88,7 @@ module MovePieceHelper
     piece.movement.each do |move_x, move_y|
       current_move = [start[X] + move_x, start[Y] + move_y]
       path = []
-      until current_move.any? { |move| move > 7 || move.negative? }
+      until current_move.any? { |square| out_of_bounds(square) }
         return path if current_move == dest
 
         path << current_move.dup
