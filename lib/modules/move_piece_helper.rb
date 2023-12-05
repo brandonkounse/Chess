@@ -12,6 +12,8 @@ module MovePieceHelper
       pawn_can_move?(piece, start, dest)
     elsif piece.instance_of?(Knight)
       knight_can_move?(piece, start, dest)
+    elsif piece.insance_of?(King)
+      king_can_move?(piece, start, dest)
     else
       major_piece_can_move?(piece, start, dest)
     end
@@ -47,6 +49,11 @@ module MovePieceHelper
     requested_movement = calculate_movement(start, dest)
 
     knight.movement.any? { |movement| movement == requested_movement }
+  end
+
+  def king_can_move?(king, start, dest)
+    requested_movement = calculate_movement(start, dest)
+    king.movement.any? { |move| move == requested_movement }
   end
 
   def major_piece_can_move?(piece, start, dest)
