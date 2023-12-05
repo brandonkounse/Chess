@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'board'
-require_relative 'coordinates'
+require_relative 'modules/coordinates'
 require_relative 'move_legality'
 
 # class to handle game flow

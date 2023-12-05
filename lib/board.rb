@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative 'army'
-require_relative 'coordinates'
+require_relative 'modules/army'
+require_relative 'modules/coordinates'
 
 # board to interface with pieces
 class Board

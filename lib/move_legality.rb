@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative 'move_helper'
-require_relative 'coordinates'
+require_relative 'modules/move_helper'
+require_relative 'modules/coordinates'
 
 # Class for determining the legality of moves
 class MoveLegality
