@@ -7,6 +7,6 @@ class Queen < Piece
   def initialize(color)
     super(color)
     @model = assign_model_from_color('♛')
-    @movement = @movement = [[1, 1], [1, -1], [-1, -1], [-1, 1], [1, 0], [-1, 0], [0, 1], [0, -1]]
+    @movement = [[1, 1], [1, -1], [-1, -1], [-1, 1], [1, 0], [-1, 0], [0, 1], [0, -1]]
   end
 end
