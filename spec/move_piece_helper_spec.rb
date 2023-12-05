@@ -56,5 +56,15 @@ describe MovePieceHelper do
         expect(major_piece_can_move?(queen, start, dest)).to be true
       end
     end
+
+    context 'when piece is a king' do
+      let(:king) { King.new(:black) }
+      let(:start) { [5, 3] }
+      let(:dest) { [5, 4] }
+
+      it 'calls #king_can_move? and returns true' do
+        expect(king_can_move?(king, start, dest)).to be true
+      end
+    end
   end
 end
