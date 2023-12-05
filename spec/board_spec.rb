@@ -162,5 +162,34 @@ describe Board do
         expect(board.squares[4][7]).to be_a Rook
       end
     end
+
+    context 'when moving a king' do
+      let(:start) { [4, 3] }
+      let(:dest) { [[4, 2], [3, 2], [5, 3], [3, 4]] }
+
+      before do
+        board.squares[4][3] = King.new(:white)
+      end
+
+      it 'moves white king from D4 to C4' do
+        board.move_piece(start, dest[0])
+        expect(board.squares[4][2]).to be_a King
+      end
+
+      it 'moves white king from D4 to C5' do
+        board.move_piece(start, dest[1])
+        expect(board.squares[3][2]).to be_a King
+      end
+
+      it 'moves white king from D4 to D3' do
+        board.move_piece(start, dest[2])
+        expect(board.squares[5][3]).to be_a King
+      end
+
+      it 'moves white king from D4 to E5' do
+        board.move_piece(start, dest[3])
+        expect(board.squares[3][4]).to be_a King
+      end
+    end
   end
 end
