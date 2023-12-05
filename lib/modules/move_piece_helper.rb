@@ -38,10 +38,6 @@ module MovePieceHelper
 
   private
 
-  def out_of_bounds(square)
-    square > 7 || square.negative?
-  end
-
   def pawn_can_move?(pawn, start, dest)
     requested_movement = calculate_movement(start, dest)
     return false if requested_movement == pawn.movement[:forward_twice] && pawn.moved? == true

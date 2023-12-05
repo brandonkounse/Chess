@@ -4,4 +4,8 @@
 module Coordinates
   X = 0 # row coordinate
   Y = 1 # column coordinate
+
+  def out_of_bounds(square)
+    square > 7 || square.negative?
+  end
 end
