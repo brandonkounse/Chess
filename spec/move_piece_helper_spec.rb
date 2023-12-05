@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 require_relative 'spec_helper'
-require_relative '../lib/modules/move_helper'
+require_relative '../lib/modules/move_piece_helper'
 
-describe MoveHelper do
-  include MoveHelper
+describe MovePieceHelper do
+  include MovePieceHelper
 
   describe '#can_move?' do
     context 'when piece is a pawn' do
