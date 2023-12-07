@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
 require_relative 'board'
-require_relative 'modules/coordinates'
 require_relative 'move_legality'
+require_relative 'modules/coordinates'
+require_relative 'modules/square_selection'
 
 # class to handle game flow
 class GameController
+  include SquareSelection
+
   attr_reader :board
 
   def initialize
