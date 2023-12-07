@@ -5,7 +5,7 @@ require_relative 'modules/coordinates'
 
 # Class for determining the legality of moves
 class MoveLegality
-  include MoveHelper
+  include MovePieceHelper
   include Coordinates
 
   def initialize(squares)
