@@ -15,11 +15,17 @@ class GameController
     @board = Board.new
   end
 
+  private
+
   def make_move(start, dest)
-    if MoveLegality.new(board.squares).legal_move?(start, dest)
-      board.move_piece(start, dest)
-    else
-      puts 'invalid move'
-    end
+    board.move_piece(start, dest) if MoveLegality.new(board.squares).legal_move?(start, dest)
+  end
+
+  def parse_move(move)
+    move.scan(/[a-zA-Z]\d/)
+  end
+
+  def input_valid?(input)
+    input.match?(/^[a-hA-H1-8]{4}$/)
   end
 end
