@@ -54,16 +54,14 @@ describe Board do
       let(:dest) { [[3, 0], [5, 0]] }
 
       it 'moves black pawn from A7 to A5' do
-        pawn = board.squares[1][0]
         board.move_piece(start[0], dest[0])
-        expect(board.squares[3][0]).to eq(pawn)
+        expect(board.squares[3][0]).to be_a Pawn
         expect(board.squares[1][0]).to be_nil
       end
 
       it 'moves white pawn from A2 to A3' do
-        pawn = board.squares[6][0]
         board.move_piece(start[1], dest[1])
-        expect(board.squares[5][0]).to eq(pawn)
+        expect(board.squares[5][0]).to be_a Pawn
         expect(board.squares[6][0]).to be_nil
       end
     end
@@ -73,30 +71,26 @@ describe Board do
       let(:dest) { [[5, 2], [5, 5], [2, 2], [2, 5]] }
 
       it 'moves white knight from B1 to C3' do
-        knight = board.squares[7][1]
         board.move_piece(start[0], dest[0])
-        expect(board.squares[5][2]).to eq(knight)
+        expect(board.squares[5][2]).to be_a Knight
         expect(board.squares[7][1]).to be_nil
       end
 
       it 'moves white knight from G1 to F3' do
-        knight = board.squares[7][6]
         board.move_piece(start[1], dest[1])
-        expect(board.squares[5][5]).to eq(knight)
+        expect(board.squares[5][5]).to be_a Knight
         expect(board.squares[7][6]).to be_nil
       end
 
       it 'moves black knight from B8 to C6' do
-        knight = board.squares[0][1]
         board.move_piece(start[2], dest[2])
-        expect(board.squares[2][2]).to eq(knight)
+        expect(board.squares[2][2]).to be_a Knight
         expect(board.squares[0][1]).to be_nil
       end
 
       it 'moves black knight from G8 to F6' do
-        knight = board.squares[0][6]
         board.move_piece(start[3], dest[3])
-        expect(board.squares[2][5]).to eq(knight)
+        expect(board.squares[2][5]).to be_a Knight
         expect(board.squares[0][6]).to be_nil
       end
     end
@@ -107,17 +101,15 @@ describe Board do
 
       it 'moves white bishop from C1 to F4' do
         board.squares[6][3] = nil
-        bishop = board.squares[7][2]
         board.move_piece(start[0], dest[0])
-        expect(board.squares[4][5]).to eq(bishop)
+        expect(board.squares[4][5]).to be_a Bishop
         expect(board.squares[7][2]).to be_nil
       end
 
       it 'moves white bishop from F1 to C4' do
         board.squares[6][4] = nil
-        bishop = board.squares[7][5]
         board.move_piece(start[1], dest[1])
-        expect(board.squares[4][2]).to eq(bishop)
+        expect(board.squares[4][2]).to be_a Bishop
         expect(board.squares[7][5]).to be_nil
       end
     end
