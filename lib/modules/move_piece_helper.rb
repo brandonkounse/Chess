@@ -12,7 +12,7 @@ module MovePieceHelper
       pawn_can_move?(piece, start, dest)
     elsif piece.instance_of?(Knight)
       knight_can_move?(piece, start, dest)
-    elsif piece.insance_of?(King)
+    elsif piece.instance_of?(King)
       king_can_move?(piece, start, dest)
     else
       major_piece_can_move?(piece, start, dest)
