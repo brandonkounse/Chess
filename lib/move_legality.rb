@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require_relative 'modules/move_piece_helper'
+require_relative 'modules/piece_movement_rules'
 require_relative 'modules/coordinates'
 
 # Class for determining the legality of moves
 class MoveLegality
-  include MovePieceHelper
+  include PieceMovementRules
   include Coordinates
 
   def initialize(squares)
