@@ -3,7 +3,7 @@
 require_relative 'army'
 require_relative 'coordinates'
 
-# Helper module for move legality to interface with board
+# Helper module for rules to move pieces on the board
 module PieceMovementRules
   include Coordinates
 
