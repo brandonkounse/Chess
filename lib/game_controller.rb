@@ -5,11 +5,12 @@ require_relative 'board'
 require_relative 'move_legality'
 require_relative 'modules/coordinates'
 require_relative 'modules/square_selection'
-require 'pry-byebug'
+require_relative 'modules/serialize'
 
 # class to handle game flow
 class GameController
   include SquareSelection
+  include Serialize
 
   attr_reader :board, :player_white, :player_black
 
@@ -35,19 +36,14 @@ class GameController
 
   private
 
-  def over?; end
-
-  def save; end
-
-  def quit; end
+  # Game Flow methods
 
   def prompt_for_move(player)
     print "\nPlease select a piece to move: "
     player.input
   end
 
-  def get_player_move(player)
-    move = ''
+  def process_move(player)
     loop do
       move = prompt_for_move(player)
       return parse_move(move) if input_valid?(move)
@@ -58,25 +54,14 @@ class GameController
 
   def facilitate_turn(player)
     loop do
-      start, dest = *get_player_move(player)
+      start, dest = *process_move(player)
       start = square_lookup(start)
       dest = square_lookup(dest)
       if legal_move?(start, dest, MoveLegality)
-        make_move(start, dest)
+        move_piece(start, dest)
         break
       end
     end
-  end
-
-  def legal_move?(start, dest, legal_class)
-    legal_class.new(board.squares).legal_move?(start, dest)
-  rescue NoMethodError
-    puts 'starting square must have a piece to move!'
-    false
-  end
-
-  def make_move(start, dest)
-    board.move_piece(start, dest)
   end
 
   def parse_move(move)
@@ -86,4 +71,27 @@ class GameController
   def input_valid?(input)
     input.match?(/^[a-hA-H1-8]{4}$/)
   end
+
+  def legal_move?(start, dest, legal_class)
+    legal_class.new(board.squares).legal_move?(start, dest)
+  rescue NoMethodError
+    puts 'starting square must have a piece to move!'
+    false
+  end
+
+  def move_piece(start, dest)
+    board.move_piece(start, dest)
+  end
+
+  # Methods for interfacing with save/load states, quitting, or winning the game
+
+  def serialize
+    puts 'Enter name of save file: '
+    filename = gets.chomp
+    save(filename)
+  end
+
+  def over?; end
+
+  def quit; end
 end
