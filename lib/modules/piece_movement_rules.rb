@@ -2,7 +2,6 @@
 
 require_relative 'army'
 require_relative 'coordinates'
-require_relative '../board'
 
 # Helper module for rules to move pieces on the board
 module PieceMovementRules
@@ -34,15 +33,14 @@ module PieceMovementRules
     return unless piece.instance_of?(Pawn)
 
     requested_movement = calculate_movement(start, dest)
-    requested_movement == piece.movement[:forward_left] || requested_movement == piece.movement[:forward_right]
+    pawn_diag_move?(requested_movement)
   end
 
   private
 
-  def pawn_can_move?(pawn, start, dest, board = Board.new)
+  def pawn_can_move?(pawn, start, dest)
     requested_movement = calculate_movement(start, dest)
-    return false if requested_movement == pawn.movement[:forward_twice] && pawn.moved? == true ||
-      dest_empty?(dest, board) && pawn_diag_move?(requested_movement)
+    return false if pawn_double_move(pawn, requested_movement) && pawn.moved?
 
     pawn.movement.value?(requested_movement)
   end
@@ -75,13 +73,17 @@ module PieceMovementRules
     [dest[0] - start[0], dest[1] - start[1]]
   end
 
-  def pawn_diag_move?(requested_movement)
+  def pawn_diag_move?(pawn, requested_movement)
     requested_movement == pawn.movement[:forward_left] || requested_movement == pawn.movement[:forward_right]
+  end
+
+  def pawn_double_move(pawn, requested_movement)
+    requested_movement == pawn.movement[:forward_twice]
   end
 
   def pawn_path(pawn, start, dest)
     requested_movement = calculate_movement(start, dest)
-    return calculate_gap(pawn, start) if pawn.movement[:forward_twice] == requested_movement
+    return calculate_gap(pawn, start) if pawn_double_move(pawn, requested_movement)
 
     nil
   end
