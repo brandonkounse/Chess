@@ -2,6 +2,7 @@
 
 require_relative 'army'
 require_relative 'coordinates'
+require_relative '../board'
 
 # Helper module for rules to move pieces on the board
 module PieceMovementRules
@@ -38,9 +39,10 @@ module PieceMovementRules
 
   private
 
-  def pawn_can_move?(pawn, start, dest)
+  def pawn_can_move?(pawn, start, dest, board = Board.new)
     requested_movement = calculate_movement(start, dest)
-    return false if requested_movement == pawn.movement[:forward_twice] && pawn.moved? == true
+    return false if requested_movement == pawn.movement[:forward_twice] && pawn.moved? == true ||
+      dest_empty?(dest, board) && pawn_diag_move?(requested_movement)
 
     pawn.movement.value?(requested_movement)
   end
@@ -73,6 +75,10 @@ module PieceMovementRules
     [dest[0] - start[0], dest[1] - start[1]]
   end
 
+  def pawn_diag_move?(requested_movement)
+    requested_movement == pawn.movement[:forward_left] || requested_movement == pawn.movement[:forward_right]
+  end
+
   def pawn_path(pawn, start, dest)
     requested_movement = calculate_movement(start, dest)
     return calculate_gap(pawn, start) if pawn.movement[:forward_twice] == requested_movement
@@ -98,5 +104,9 @@ module PieceMovementRules
   def calculate_gap(pawn, start)
     # will return the board square directly behind where the pawn's final destination is
     [[start[X] + pawn.movement[:forward_once][X], start[Y] + pawn.movement[:forward_once][Y]]]
+  end
+
+  def dest_empty?(dest, board)
+    board.squares[dest[X]][dest[Y]].nil?
   end
 end
