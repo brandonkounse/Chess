@@ -4,6 +4,8 @@ require 'yaml'
 
 # YAML methods to save and load game states
 module Serialize
+  PERMITTED_CLASSES = [Symbol, Board, Piece, Pawn, Rook, Knight, Bishop, King, Queen, Player]
+
   def save(name)
     Dir.mkdir('./saves') unless Dir.exist?('./saves')
     File.new("./saves/#{name}.yml", 'w') unless File.exist?(name)
@@ -11,7 +13,7 @@ module Serialize
   end
 
   def load_file(name)
-    data = YAML.safe_load(File.read("./saves/#{name}"), permitted_classes: [Symbol])
+    data = YAML.safe_load(File.read("./saves/#{name}.yml"), permitted_classes: PERMITTED_CLASSES)
     @board = data[:board]
     @player_white = data[:player_white]
     @player_black = data[:player_black]
