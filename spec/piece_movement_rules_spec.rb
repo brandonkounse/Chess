@@ -8,23 +8,35 @@ describe PieceMovementRules do
 
   describe '#can_move?' do
     context 'when piece is a pawn' do
-      let(:pawn) { Pawn.new(:white) }        
+      let(:pawn) { Pawn.new(:white) } 
+      let(:start) { [[6, 1], [4, 0]] }
+      let(:dest) { [[5, 1], [4, 1], [5, 0], [5, 2], [3, 1], [5, 0]] }
 
-      context 'when destination is empty and valid move' do
-        let(:start) { [6, 0] }
-        let(:dest) { [5, 0] }
-
-        it 'calls #pawn_can_move? and returns true' do
-          expect(can_move?(pawn, start, dest)).to be true
+      context 'when valid movements' do
+        it 'moves pawn 1 space forward and returns true' do
+          expect(can_move?(pawn, start[0], dest[0])).to be true
+        end
+  
+        it 'moves pawn 2 spaces forward and returns true' do
+          expect(can_move?(pawn, start[0], dest[1])).to be true
+        end
+  
+        it 'moves pawn 1 space diagonally left and returns true' do
+          expect(can_move?(pawn, start[0], dest[2])).to be true
+        end
+  
+        it 'moves pawn 1 space diagonally right and returns true' do
+          expect(can_move?(pawn, start[0], dest[3])).to be true
         end
       end
+      
+      context 'when invalid movements' do
+        it 'fails to move pawn 3 spaces out of range' do
+          expect(can_move?(pawn, start[0], dest[4])).to be false
+        end
 
-      context 'when destination is empty but invalid move' do
-        let(:start) { [6, 0] }
-        let(:dest) { [5, 1] }
-
-        it 'calls #pawn_can_move? and returns false' do
-          expect(can_move?(pawn, start, dest)).to be false
+        it 'fails to move pawn backwards' do
+          expect(can_move?(pawn, start[1], dest[5])).to be false
         end
       end
     end
