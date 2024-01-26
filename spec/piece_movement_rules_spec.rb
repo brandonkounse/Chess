@@ -8,12 +8,24 @@ describe PieceMovementRules do
 
   describe '#can_move?' do
     context 'when piece is a pawn' do
-      let(:pawn) { Pawn.new(:white) }
-      let(:start) { [6, 0] }
-      let(:dest) { [5, 0] }
+      let(:pawn) { Pawn.new(:white) }        
 
-      it 'calls #pawn_can_move? and returns true' do
-        expect(can_move?(pawn, start, dest)).to be true
+      context 'when destination is empty and valid move' do
+        let(:start) { [6, 0] }
+        let(:dest) { [5, 0] }
+
+        it 'calls #pawn_can_move? and returns true' do
+          expect(can_move?(pawn, start, dest)).to be true
+        end
+      end
+
+      context 'when destination is empty but invalid move' do
+        let(:start) { [6, 0] }
+        let(:dest) { [5, 1] }
+
+        it 'calls #pawn_can_move? and returns false' do
+          expect(can_move?(pawn, start, dest)).to be false
+        end
       end
     end
 
